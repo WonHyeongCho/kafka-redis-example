@@ -1,4 +1,4 @@
-package ktds.fresh.kafka;
+package ktds.fresh.kafkaredisexample.kafka;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -19,15 +19,16 @@ public class MyProducer {
         Properties properties;
         properties = new Properties();
         properties.put("bootstrap.servers", this.brokers);
-        properties.put("serializer.class", "kafka.serializer.StringEncoder");
+        properties.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        properties.put("value.serializer", "org.apache.kafka.common.serialization.ByteArraySerializer");
 
-        /* MyProducer 연결 */
+        /* Kafka Producer 연결 */
         KafkaProducer<String, String> producer = new KafkaProducer<String, String>(properties);
 
         /* Kafka로 데이터 전송 */
         producer.send(new ProducerRecord<String, String>(topic, text));
 
-        /* MyProducer 종료 */
+        /* Kafka Producer 종료 */
         producer.flush();
         producer.close();
     }
