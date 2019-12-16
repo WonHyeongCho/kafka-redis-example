@@ -20,7 +20,7 @@ public class MyProducer {
         properties = new Properties();
         properties.put("bootstrap.servers", this.brokers);
         properties.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        properties.put("value.serializer", "org.apache.kafka.common.serialization.ByteArraySerializer");
+        properties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
         /* Kafka Producer 연결 */
         KafkaProducer<String, String> producer = new KafkaProducer<String, String>(properties);
