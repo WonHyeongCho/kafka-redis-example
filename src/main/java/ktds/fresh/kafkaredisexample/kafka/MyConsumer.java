@@ -21,8 +21,8 @@ public class MyConsumer {
         Properties properties;
         properties = new Properties();
         properties.put("bootstrap.servers", this.brokers);
-        properties.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        properties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        properties.put("key.deserializer", "org.apache.kafka.common.serialization.StringSerializer");
+        properties.put("value.deserializer", "org.apache.kafka.common.serialization.StringSerializer");
 
         /* Kafka Consumer 연결 */
         KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<String, String>(properties);
