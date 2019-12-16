@@ -21,6 +21,7 @@ public class MyConsumer {
         Properties properties;
         properties = new Properties();
         properties.put("bootstrap.servers", this.brokers);
+        properties.put("group.id", "ktds.fresh");
         properties.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         properties.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 
