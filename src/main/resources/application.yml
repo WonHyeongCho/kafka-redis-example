@@ -1,6 +1,6 @@
 spring:
   kafka:
-    bootstrap-servers:
+    bootstrap-servers: localhost:9092
 
 logging:
   pattern:
