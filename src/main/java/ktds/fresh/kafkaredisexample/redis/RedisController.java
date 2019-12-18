@@ -26,6 +26,7 @@ public class RedisController {
 
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
         valueOperations.set(key, value);
+        System.out.println("aaaa");
     }
 
     @RequestMapping("get/string")
