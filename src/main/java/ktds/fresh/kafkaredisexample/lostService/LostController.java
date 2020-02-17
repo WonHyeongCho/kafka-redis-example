@@ -14,7 +14,7 @@ public class LostController {
     LostService lostService;
 
     /**
-     * 분실물 등록 REST API
+     * 분실물 등록 API
      * @param param {
      *  name,
      *  quantity,
@@ -22,7 +22,8 @@ public class LostController {
      *  lost_location,
      *  lost_time,
      *  category,
-     *  description
+     *  description,
+     *  reg_id
      * }
      */
     @RequestMapping(method = RequestMethod.POST, value = "/item/insert")
