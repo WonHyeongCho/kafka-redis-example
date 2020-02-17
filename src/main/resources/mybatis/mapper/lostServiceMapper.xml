@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ktds.fresh.kafkaredisexample.mapper.LostServiceMapper">
+    <insert id="insertLostItem" parameterType="map">
+        INSERT INTO lost_item_info(name, quantity, lost_location, lost_user_id, lost_time, category, description, reg_id)
+        Values(#{name}, #{quantity}, #{lost_location}, #{lost_user_id}, #{lost_time}, #{category}, #{description}, #{reg_id})
+    </insert>
+
+    <select id="selectLostItem" parameterType="int" resultType="ktds.fresh.kafkaredisexample.lostService.LostItemVo">
+        SELECT *
+        FROM lost_item_info
+        WHERE seq = #{seq}
+    </select>
+
+    <select id="selectLostItemList" resultType="ktds.fresh.kafkaredisexample.lostService.LostItemVo">
+        SELECT *
+        FROM lost_item_info
+    </select>
+</mapper>
