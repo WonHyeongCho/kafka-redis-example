@@ -11,9 +11,9 @@ import org.springframework.kafka.support.Acknowledgment;
 public class Receiver extends KafkaProperties.Listener {
     private static final Logger logger = LoggerFactory.getLogger(Receiver.class);
 
-    @KafkaListener(id = "ktds.fresh", topics = "TestTopic", containerFactory = "kafkaListenContainerFactory")
+    @KafkaListener(id = "ktds.fresh", topics = "msa_test_20200219", containerFactory = "kafkaListenContainerFactory")
     public void receive(ConsumerRecord consumerRecord, Acknowledgment acknowledgment){
-        logger.info("ConsumerRecord: " + consumerRecord.toString() + ", Acknowledgment: " + acknowledgment.toString());
-
+        logger.info("KafkaListener - ConsumerRecord: " + consumerRecord.toString() + ", " +
+                "Acknowledgment: " + acknowledgment.toString());
     }
 }
