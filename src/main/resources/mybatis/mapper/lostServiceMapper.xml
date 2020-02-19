@@ -13,8 +13,12 @@
         WHERE seq = #{seq}
     </select>
 
-    <select id="selectLostItemList" resultType="ktds.fresh.kafkaredisexample.lostService.LostItemVo">
+    <select id="selectLostItemList" parameterType="map" resultType="ktds.fresh.kafkaredisexample.lostService.LostItemVo">
         SELECT *
         FROM lost_item_info
+        WHERE 1=1
+        <if test="'' != category and null != category">
+            AND category = #{category}
+        </if>
     </select>
 </mapper>

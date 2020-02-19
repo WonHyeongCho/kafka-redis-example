@@ -32,7 +32,7 @@ public class FindService {
         Map<String, Object> payload = new HashMap<>();
         payload.put("service", "FindService");
         payload.put("key", "find");
-        payload.put("category", "value");
+        payload.put("category", category);
 
         try{
             sender.send(topic, payload);
@@ -45,7 +45,7 @@ public class FindService {
         return findServiceMapper.selectFindItem(seq);
     }
 
-    public List<FindItemVo> selectFindItemList(){
-        return findServiceMapper.selectFindItemList();
+    public List<FindItemVo> selectFindItemList(Map<String, Object> param){
+        return findServiceMapper.selectFindItemList(param);
     }
 }

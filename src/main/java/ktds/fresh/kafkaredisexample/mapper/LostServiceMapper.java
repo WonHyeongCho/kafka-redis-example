@@ -12,5 +12,5 @@ import java.util.Map;
 public interface LostServiceMapper {
     void insertLostItem(Map param);
     LostItemVo selectLostItem(int seq);
-    List<LostItemVo> selectLostItemList();
+    List<LostItemVo> selectLostItemList(Map param);
 }

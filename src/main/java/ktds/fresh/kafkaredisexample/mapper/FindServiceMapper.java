@@ -12,5 +12,5 @@ import java.util.Map;
 public interface FindServiceMapper {
     void insertFindItem(Map param);
     FindItemVo selectFindItem(int seq);
-    List<FindItemVo> selectFindItemList();
+    List<FindItemVo> selectFindItemList(Map param);
 }

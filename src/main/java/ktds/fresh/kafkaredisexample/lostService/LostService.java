@@ -21,7 +21,7 @@ public class LostService {
         return lostServiceMapper.selectLostItem(seq);
     }
 
-    public List<LostItemVo> selectLostItemList(){
-        return lostServiceMapper.selectLostItemList();
+    public List<LostItemVo> selectLostItemList(Map<String, Object> param){
+        return lostServiceMapper.selectLostItemList(param);
     }
 }

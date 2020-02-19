@@ -50,7 +50,7 @@ public class FindController {
      * @return 습득물 리스트
      */
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = "/item/list")
-    public @ResponseBody List<FindItemVo> selectLostItemList(){
-        return findService.selectFindItemList();
+    public @ResponseBody List<FindItemVo> selectLostItemList(@RequestBody Map<String, Object> param){
+        return findService.selectFindItemList(param);
     }
 }
