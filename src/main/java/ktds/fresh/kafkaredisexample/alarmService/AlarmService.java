@@ -1,5 +1,6 @@
 package ktds.fresh.kafkaredisexample.alarmService;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import ktds.fresh.kafkaredisexample.kafka.KafkaController;
 import ktds.fresh.kafkaredisexample.kafka.MyProducer;
 import ktds.fresh.kafkaredisexample.kafka.Sender.Sender;
@@ -13,9 +14,8 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.net.URI;
+import java.util.*;
 
 @Service
 public class AlarmService {
@@ -35,17 +35,27 @@ public class AlarmService {
                 .build();
         factory.setHttpClient(httpClient);
 
-        String lostServiceUrl = "35.194.113.156:8080/lost/item/list";
+        String lostServiceUrl = "http://35.194.113.156:8080/lost/item/list";
+        URI uri = URI.create(lostServiceUrl);
 
         RestTemplate restTemplate = new RestTemplate(factory);
 
-        List<LostItemVo> lostItemVoList = restTemplate.getForObject(lostServiceUrl, List.class);
+        Map<String, Object> param = new HashMap<>();
+        param.put("category", category);
+
+        LostItemVo[] lostItemVoArray = restTemplate.postForObject(uri, param, LostItemVo[].class);
+
+        List<LostItemVo> lostItemVoList = new LinkedList<>();
+
+        if(lostItemVoArray != null && lostItemVoArray.length > 0){
+            lostItemVoList = Arrays.asList(lostItemVoArray);
+        }
 
         Map<String, Object> payload = new HashMap<>();
         payload.put("service", "AlarmService");
         payload.put("key", "alarm");
 
-        if(lostItemVoList != null && lostItemVoList.size() > 0){
+        if(lostItemVoList.size() > 0){
             StringBuilder lost_user_id = new StringBuilder();
             for(LostItemVo lostItemVo : lostItemVoList) {
                 logger.info("물건을 잃어 버린 사람의 ID: " + lostItemVo.getLost_user_id());
@@ -55,6 +65,15 @@ public class AlarmService {
         }
         else{
             logger.info("물건이 잃어 버린 사람이 없습니다.");
+        }
+
+        String topic = "msa_test_20200219";
+
+        try{
+            sender.send(topic, payload);
+        }
+        catch (JsonProcessingException e){
+            logger.error(e.toString());
         }
     }
 }
