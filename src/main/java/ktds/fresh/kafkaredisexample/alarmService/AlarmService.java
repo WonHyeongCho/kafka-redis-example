@@ -2,7 +2,6 @@ package ktds.fresh.kafkaredisexample.alarmService;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import ktds.fresh.kafkaredisexample.kafka.KafkaController;
-import ktds.fresh.kafkaredisexample.kafka.MyProducer;
 import ktds.fresh.kafkaredisexample.kafka.Sender.Sender;
 import ktds.fresh.kafkaredisexample.lostService.LostItemVo;
 import org.apache.http.client.HttpClient;
@@ -24,6 +23,7 @@ public class AlarmService {
     @Autowired
     Sender sender;
 
+    // LostService 에 Rest API 조회를 통해 해당 카테고리의 분실물자 정보 조회
     public void getLostItemInfo(String category){
         // Rest Template 생성
         HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
@@ -35,6 +35,7 @@ public class AlarmService {
                 .build();
         factory.setHttpClient(httpClient);
 
+        // URL
         String lostServiceUrl = "http://35.194.113.156:8080/lost/item/list";
         URI uri = URI.create(lostServiceUrl);
 
@@ -43,14 +44,17 @@ public class AlarmService {
         Map<String, Object> param = new HashMap<>();
         param.put("category", category);
 
+        // REST POST
         LostItemVo[] lostItemVoArray = restTemplate.postForObject(uri, param, LostItemVo[].class);
 
+        // List 로 변환
         List<LostItemVo> lostItemVoList = new LinkedList<>();
-
         if(lostItemVoArray != null && lostItemVoArray.length > 0){
             lostItemVoList = Arrays.asList(lostItemVoArray);
         }
 
+        // 카프카 파라미터
+        String topic = "msa_test_20200219";
         Map<String, Object> payload = new HashMap<>();
         payload.put("service", "AlarmService");
         payload.put("key", "alarm");
@@ -67,8 +71,7 @@ public class AlarmService {
             logger.info("물건이 잃어 버린 사람이 없습니다.");
         }
 
-        String topic = "msa_test_20200219";
-
+        // 카프카로 전송
         try{
             sender.send(topic, payload);
         }

@@ -19,6 +19,7 @@ public class Sender {
     public void send(String topic, Map<String, Object> payload) throws JsonProcessingException {
         logger.info("sending payload='{}'", payload.toString());
 
+        // Map -> Json 으로 변환
         ObjectMapper objectMapper = new ObjectMapper();
 
         ProducerRecord<String, String> producerRecord = new ProducerRecord<>(topic, objectMapper.writeValueAsString(payload));

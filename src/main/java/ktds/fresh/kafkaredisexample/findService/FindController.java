@@ -47,6 +47,9 @@ public class FindController {
 
     /**
      * 습듣물 리스트 조회 API
+     * @Param param{
+     *  category 습득물 카테고리
+     * }
      * @return 습득물 리스트
      */
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = "/item/list")

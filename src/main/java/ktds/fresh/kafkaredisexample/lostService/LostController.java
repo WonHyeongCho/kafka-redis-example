@@ -46,6 +46,9 @@ public class LostController {
 
     /**
      * 분실물 리스트 조회 API
+     * @param param{
+     *  category 분실물 카테고리
+     * }
      * @return 분실물 리스트
      */
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = "/item/list")

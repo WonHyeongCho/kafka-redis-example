@@ -19,6 +19,7 @@ public class Receiver {
 
     @KafkaListener(topics = "msa_test_20200219")
     public void receive(ConsumerRecord consumerRecord) throws JsonProcessingException {
+        // Json -> Map 으로 변환
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> payload = objectMapper.readValue(consumerRecord.value().toString(), Map.class);
 
